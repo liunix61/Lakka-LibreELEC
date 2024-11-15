@@ -3,9 +3,9 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="pvr.mythtv"
-PKG_VERSION="21.1.8-Omega"
-PKG_SHA256="3f1d826e11da10a600dd4de0bfd279a0c583aeae387832c6f9f06bb8befbb811"
-PKG_REV="2"
+PKG_VERSION="21.1.11-Omega"
+PKG_SHA256="15c772adbf79fd92bd6b7d597fd85a23df00b26bd433531c997101ee8ddde86c"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/janbar/pvr.mythtv"

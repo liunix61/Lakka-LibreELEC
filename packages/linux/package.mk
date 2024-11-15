@@ -23,8 +23,8 @@ case "${LINUX}" in
     PKG_PATCH_DIRS="default"
     ;;
   raspberrypi)
-    PKG_VERSION="51c5d2bb01d3a0cff31d00686f35ed8f33039f78" # 6.6.33
-    PKG_SHA256="0e2ca3b34312b1527aa9d380761af2ab1ec7754ae4481b0317fa144d4b060501"
+    PKG_VERSION="66aef6ce3557edd9d58d794e4a800c5be49ca0e7" # 6.6.60
+    PKG_SHA256="6e9843b8954faa1e5195aaf3a76a43fcc2ddb6cd152f628605d0e2ce61f551ea"
     PKG_URL="https://github.com/raspberrypi/linux/archive/${PKG_VERSION}.tar.gz"
     PKG_SOURCE_NAME="linux-${LINUX}-${PKG_VERSION}.tar.gz"
     ;;
@@ -54,8 +54,8 @@ case "${LINUX}" in
    PKG_GIT_CLONE_BRANCH="sdm845-5.19.16"
    ;;
   *)
-    PKG_VERSION="6.6.30"
-    PKG_SHA256="b66a5b863b0f8669448b74ca83bd641a856f164b29956e539bbcb5fdeeab9cc6"
+    PKG_VERSION="6.6.57"
+    PKG_SHA256="66ce426ef96f99b8e1ef7ac72e780c730ef8b970f7aa5708501c4274d7abb7b3"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v${PKG_VERSION/.*/}.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
@@ -155,14 +155,13 @@ pre_make_target() {
     ${PKG_BUILD}/scripts/config --disable CONFIG_CIFS
   fi
 
-  # disable iscsi support if not enabled
-  if [ ! "${ISCSI_SUPPORT}" = yes ]; then
-    ${PKG_BUILD}/scripts/config --disable CONFIG_SCSI_ISCSI_ATTRS
-    ${PKG_BUILD}/scripts/config --disable CONFIG_ISCSI_TCP
-    ${PKG_BUILD}/scripts/config --disable CONFIG_ISCSI_BOOT_SYSFS
-    ${PKG_BUILD}/scripts/config --disable CONFIG_ISCSI_IBFT_FIND
-    ${PKG_BUILD}/scripts/config --disable CONFIG_ISCSI_IBFT
-  fi
+  # enable/disable iscsi support
+  [ "${ISCSI_SUPPORT}" = yes ] && OPTION="--enable" || OPTION="--disable"
+  ${PKG_BUILD}/scripts/config ${OPTION} CONFIG_SCSI_ISCSI_ATTRS
+  ${PKG_BUILD}/scripts/config ${OPTION} CONFIG_ISCSI_TCP
+  ${PKG_BUILD}/scripts/config ${OPTION} CONFIG_ISCSI_BOOT_SYSFS
+  ${PKG_BUILD}/scripts/config ${OPTION} CONFIG_ISCSI_IBFT_FIND
+  ${PKG_BUILD}/scripts/config ${OPTION} CONFIG_ISCSI_IBFT
 
   # disable lima/panfrost if libmali is configured
   if [ "${OPENGLES}" = "libmali" ]; then
