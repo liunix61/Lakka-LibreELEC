@@ -109,6 +109,7 @@ LIBRETRO_CORES="\
                 o2em \
                 openlara \
                 opera \
+                panda3ds \
                 parallel_n64 \
                 pcsx_rearmed \
                 picodrive \
@@ -163,6 +164,11 @@ LIBRETRO_CORES="\
                 yabause \
                "
 
+# override above with custom list via env CUSTOM_LIBRETRO_CORES="..." passed to make
+if [ -n "${CUSTOM_LIBRETRO_CORES}" ]; then
+  LIBRETRO_CORES="${CUSTOM_LIBRETRO_CORES}"
+fi
+
 # disable cores based on PROJECT/DEVICE
 if [ "${PROJECT}" = "RPi" ]; then
   EXCLUDE_LIBRETRO_CORES+=" yabasanshiro"
@@ -203,6 +209,7 @@ if [ "${PROJECT}" = "RPi" ]; then
                              mupen64plus_next \
                              openlara \
                              opera \
+                             panda3ds \
                              parallel_n64 \
                              play \
                              ppsspp \
@@ -226,6 +233,9 @@ if [ "${PROJECT}" = "RPi" ]; then
   elif [ "${DEVICE}" = "RPi3" ]; then
     EXCLUDE_LIBRETRO_CORES+=" yabasanshiro"
   fi
+  if [ "${DEVICE}" != "RPi5" ]; then
+    EXCLUDE_LIBRETRO_CORES+=" panda3ds"
+  fi
 elif [ "${PROJECT}" = "Amlogic" -o "${PROJECT}" = "Rockchip" -o "${PROJECT}" = "Allwinner" ]; then
   EXCLUDE_LIBRETRO_CORES+=" yabasanshiro"
 elif [ "${PROJECT}" = "Generic" -a "${ARCH}" = "i386" ]; then
@@ -237,6 +247,10 @@ elif [ "${PROJECT}" = "L4T" -a "${DEVICE}" = "Switch" ]; then
 # Stella Doesnt Build.
 # Holani Doesnt Build.
   EXCLUDE_LIBRETRO_CORES+=" stella holani lr_moonlight"
+elif [ "${PROJECT}" = "NXP" -a "${DEVICE}" = "iMX8" ];
+  EXCLUDE_LIBRETRO_CORES+=" panda3ds"
+elif [ "${PROJECT}" = "Amlogic" -a "${DEVICE}" = "AMLGX" ]; then
+  EXCLUDE_LIBRETRO_CORES+=" panda3ds"
 fi
 
 # disable cores that are only for specific targets
@@ -258,15 +272,11 @@ if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
 fi
 
 # exclude some cores at build time via env EXCLUDE_LIBRETRO_CORES="..." passed to make
+# and cores added to the env above
 if [ -n "${EXCLUDE_LIBRETRO_CORES}" ]; then
   for core in ${EXCLUDE_LIBRETRO_CORES} ; do
     LIBRETRO_CORES="${LIBRETRO_CORES// ${core} /}"
   done
-fi
-
-# override above with custom list via env CUSTOM_LIBRETRO_CORES="..." passed to make
-if [ -n "${CUSTOM_LIBRETRO_CORES}" ]; then
-  LIBRETRO_CORES="${CUSTOM_LIBRETRO_CORES}"
 fi
 
 # temporary disabled due to build errors for all targets
