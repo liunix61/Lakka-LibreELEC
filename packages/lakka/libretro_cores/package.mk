@@ -193,44 +193,57 @@ if [ -n "${CUSTOM_LIBRETRO_CORES}" ]; then
   LIBRETRO_CORES="${CUSTOM_LIBRETRO_CORES}"
 fi
 
+# disable cores that do not build for OPENGLES
+if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
+  EXCLUDE_LIBRETRO_CORES+=" kronos"
+fi
+
 # disable cores based on PROJECT/DEVICE
 if [ "${PROJECT}" = "Allwinner" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3 yabasanshiro"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
+
 elif [ "${PROJECT}" = "Amlogic" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight panda3ds vitaquake3 yabasanshiro"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight \
+                            panda3ds"
+
 elif [ "${PROJECT}" = "Ayn" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
+
 elif [ "${PROJECT}" = "Generic" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3"
-  if [ "${ARCH}" = "i386" ]; then
-    EXCLUDE_LIBRETRO_CORES+=" fake_08 openlara"
-  fi
+  EXCLUDE_LIBRETRO_CORES+=" citra \
+                            lr_moonlight"
+
 elif [ "${PROJECT}" = "L4T" ]; then
-  # lr_moonlight does not currently build for Switch because of newer OpenSSL package. (older package is not compatible with ffmpeg)
-  # mame requires gcc >= 10.3
-  # Stella Doesnt Build.
-  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight mame stella"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight \
+                            mame \
+                            melondsds \
+                            panda3ds \
+                            stella"
+
 elif [ "${PROJECT}" = "NXP" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
+
   if [ "${DEVICE}" = "iMX8" ]; then
     EXCLUDE_LIBRETRO_CORES+=" panda3ds"
   fi
+
 elif [ "${PROJECT}" = "Rockchip" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3 yabasanshiro"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
+
 elif [ "${PROJECT}" = "RPi" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3 yabasanshiro"
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
+
   if [ "${DEVICE}" = "RPi" -o "${DEVICE}" = "RPiZero-GPiCase" ]; then
-    EXCLUDE_LIBRETRO_CORES+="\
-                             beetle_bsnes \
+    EXCLUDE_LIBRETRO_CORES+="beetle_bsnes \
                              beetle_psx \
                              beetle_saturn \
                              beetle_vb \
                              bk_emulator \
+                             boom3 \
                              bsnes \
                              bsnes2014 \
                              bsnes_hd \
                              bsnes_mercury \
-                             citra \
                              desmume \
                              desmume_2015 \
                              dolphin \
@@ -243,7 +256,6 @@ elif [ "${PROJECT}" = "RPi" ]; then
                              genesis_plus_gx \
                              higan_sfc \
                              higan_sfc_balanced \
-                             kronos \
                              mame \
                              mame2003_plus \
                              mame2010 \
@@ -256,7 +268,6 @@ elif [ "${PROJECT}" = "RPi" ]; then
                              mupen64plus_next \
                              openlara \
                              opera \
-                             panda3ds \
                              parallel_n64 \
                              play \
                              ppsspp \
@@ -271,25 +282,32 @@ elif [ "${PROJECT}" = "RPi" ]; then
                              virtualjaguar \
                              vircon32 \
                              vitaquake2 \
-                             yabause \
-                            "
+                             vitaquake3 \
+                             yabasanshiro \
+                             yabause"
+
   elif [ "${DEVICE}" = "RPi2" ]; then
     EXCLUDE_LIBRETRO_CORES+=" play"
+
   elif [ "${DEVICE}" = "RPiZero2-GPiCase" ]; then
-    EXCLUDE_LIBRETRO_CORES+=" flycast kronos openlara play ppsspp vircon32 swanstation"
-  elif [ "${DEVICE}" = "RPi3" ]; then
-    EXCLUDE_LIBRETRO_CORES+=" yabasanshiro"
+    EXCLUDE_LIBRETRO_CORES+=" boom3 \
+                              flycast \
+                              openlara \
+                              play \
+                              ppsspp \
+                              vircon32 \
+                              vitaquadke3 \
+                              swanstation \
+                              yabasanshiro"
+
   fi
+
   if [ "${DEVICE}" != "RPi5" ]; then
     EXCLUDE_LIBRETRO_CORES+=" panda3ds"
   fi
-elif [ "${PROJECT}" = "Samsung" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" boom3 lr_moonlight vitaquake3"
-fi
 
-# disable cores that do not build for OPENGLES
-if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" kronos"
+elif [ "${PROJECT}" = "Samsung" ]; then
+  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
 fi
 
 # exclude some cores at build time via env EXCLUDE_LIBRETRO_CORES="core1 core2"
@@ -299,11 +317,6 @@ if [ -n "${EXCLUDE_LIBRETRO_CORES}" ]; then
     LIBRETRO_CORES="${LIBRETRO_CORES// ${core} /}"
   done
 fi
-
-# temporary disabled due to build errors for all targets
-for core in citra ; do
-  LIBRETRO_CORES="${LIBRETRO_CORES// ${core} /}"
-done
 
 # finally set package dependencies
 PKG_DEPENDS_TARGET="${LIBRETRO_CORES}"
