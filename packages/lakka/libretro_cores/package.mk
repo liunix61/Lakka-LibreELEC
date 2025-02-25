@@ -234,57 +234,57 @@ elif [ "${PROJECT}" = "RPi" ]; then
   EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
 
   if [ "${DEVICE}" = "RPi" -o "${DEVICE}" = "RPiZero-GPiCase" ]; then
-    EXCLUDE_LIBRETRO_CORES+="beetle_bsnes \
-                             beetle_psx \
-                             beetle_saturn \
-                             beetle_vb \
-                             bk_emulator \
-                             boom3 \
-                             bsnes \
-                             bsnes2014 \
-                             bsnes_hd \
-                             bsnes_mercury \
-                             desmume \
-                             desmume_2015 \
-                             dolphin \
-                             dosbox \
-                             dosbox_core \
-                             dosbox_pure \
-                             dosbox_svn \
-                             fbneo \
-                             flycast \
-                             genesis_plus_gx \
-                             higan_sfc \
-                             higan_sfc_balanced \
-                             mame \
-                             mame2003_plus \
-                             mame2010 \
-                             mame2015 \
-                             melonds \
-                             melondsds \
-                             meowpc98 \
-                             mesen \
-                             mesen_s \
-                             mupen64plus_next \
-                             openlara \
-                             opera \
-                             parallel_n64 \
-                             play \
-                             ppsspp \
-                             puae \
-                             same_cdi \
-                             snes9x \
-                             snes9x2005_plus \
-                             snes9x2010 \
-                             swanstation \
-                             uae4arm \
-                             vbam \
-                             virtualjaguar \
-                             vircon32 \
-                             vitaquake2 \
-                             vitaquake3 \
-                             yabasanshiro \
-                             yabause"
+    EXCLUDE_LIBRETRO_CORES+=" beetle_bsnes \
+                              beetle_psx \
+                              beetle_saturn \
+                              beetle_vb \
+                              bk_emulator \
+                              boom3 \
+                              bsnes \
+                              bsnes2014 \
+                              bsnes_hd \
+                              bsnes_mercury \
+                              desmume \
+                              desmume_2015 \
+                              dolphin \
+                              dosbox \
+                              dosbox_core \
+                              dosbox_pure \
+                              dosbox_svn \
+                              fbneo \
+                              flycast \
+                              genesis_plus_gx \
+                              higan_sfc \
+                              higan_sfc_balanced \
+                              mame \
+                              mame2003_plus \
+                              mame2010 \
+                              mame2015 \
+                              melonds \
+                              melondsds \
+                              meowpc98 \
+                              mesen \
+                              mesen_s \
+                              mupen64plus_next \
+                              openlara \
+                              opera \
+                              parallel_n64 \
+                              play \
+                              ppsspp \
+                              puae \
+                              same_cdi \
+                              snes9x \
+                              snes9x2005_plus \
+                              snes9x2010 \
+                              swanstation \
+                              uae4arm \
+                              vbam \
+                              virtualjaguar \
+                              vircon32 \
+                              vitaquake2 \
+                              vitaquake3 \
+                              yabasanshiro \
+                              yabause"
 
   elif [ "${DEVICE}" = "RPi2" ]; then
     EXCLUDE_LIBRETRO_CORES+=" play"
@@ -296,7 +296,7 @@ elif [ "${PROJECT}" = "RPi" ]; then
                               play \
                               ppsspp \
                               vircon32 \
-                              vitaquadke3 \
+                              vitaquake3 \
                               swanstation \
                               yabasanshiro"
 
