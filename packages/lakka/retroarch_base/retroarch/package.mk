@@ -18,6 +18,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-vg \
                            --enable-command \
                            --enable-kms \
                            --enable-egl \
+                           --enable-ssl \
+                           --enable-builtinmbedtls \
                            --datarootdir=${SYSROOT_PREFIX}/usr/share" # don't use host /usr/share!
 
 PKG_MAKE_OPTS_TARGET="V=1 \
@@ -28,6 +30,9 @@ PKG_MAKE_OPTS_TARGET="V=1 \
                       HAVE_HAVE_ZARCH=0 \
                       HAVE_WIFI=1 \
                       HAVE_BLUETOOTH=1 \
+                      HAVE_CLOUDSYNC=1 \
+                      HAVE_SSL=1 \
+                      HAVE_BUILTINMBEDTLS=1 \
                       HAVE_FREETYPE=1"
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
