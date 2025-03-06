@@ -213,7 +213,8 @@ elif [ "${PROJECT}" = "Generic" ]; then
   EXCLUDE_LIBRETRO_CORES+=" lr_moonlight"
 
 elif [ "${PROJECT}" = "L4T" ]; then
-  EXCLUDE_LIBRETRO_CORES+=" lr_moonlight \
+  EXCLUDE_LIBRETRO_CORES+=" citra \
+                            lr_moonlight \
                             mame \
                             melondsds \
                             panda3ds \
